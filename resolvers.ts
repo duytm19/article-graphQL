@@ -39,5 +39,17 @@ export const resolvers={
             })
             return "Delete Article successfully!!"
         },
+        updateArticle:async(_,args)=>{
+            const {id,article} = args
+
+            await Article.updateOne({
+                _id:id
+            },article)
+
+            const record = await Article.findOne({
+                _id:id
+            })
+            return record
+        },
     }
 }
