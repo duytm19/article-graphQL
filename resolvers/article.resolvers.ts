@@ -11,7 +11,8 @@ export const resolversArticle={
                 currentPage,
                 limitItems,
                 filterKey,
-                filterValue
+                filterValue,
+                keyword
             }= args
             
             const find = {
@@ -37,7 +38,12 @@ export const resolversArticle={
             }
             const objectPagination = paginationHelper(initPagination, [currentPage,limitItems], countRecords)
             // End Pagination 
-            
+            // Search
+            if(keyword){
+                const keywordRegex = new RegExp(keyword,"i")
+                find["title"]=keywordRegex
+            }
+            // End Search
             const articles = await Article.find(find).sort(sort).skip(objectPagination.skip)
             return articles
         },
