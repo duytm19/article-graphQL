@@ -5,8 +5,8 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { typeDefs } from "./typeDefs";
-import { resolvers } from "./resolvers";
+import { typeDefs } from "./typeDefs/index.typeDefs";
+import { resolvers } from "./resolvers/index.resolvers";
 
 const app: Express = express();
 const PORT: number = Number(process.env.PORT) || 3000;
@@ -20,8 +20,8 @@ const startServer = async () => {
 
     // Khởi tạo Apollo Server
     const apolloServer = new ApolloServer({
-        typeDefs,
-        resolvers,
+        typeDefs:typeDefs,
+        resolvers: resolvers,
     });
 
     // Khởi động Apollo Server
