@@ -8,6 +8,8 @@ import bodyParser from 'body-parser';
 import { typeDefs } from "./typeDefs/index.typeDefs";
 import { resolvers } from "./resolvers/index.resolvers";
 import { requireAuth } from "./middlewares/auth.middleware";
+import { ApolloServerPluginLandingPageDisabled } from '@apollo/server/plugin/disabled';
+
 
 const app: Express = express();
 const PORT: Number = 3000;
@@ -24,7 +26,8 @@ const startServer = async () => {
     const apolloServer = new ApolloServer({
         typeDefs:typeDefs,
         resolvers: resolvers,
-        introspection:true
+        introspection:true,
+        plugins: [ApolloServerPluginLandingPageDisabled()],
     });
 
     // Khởi động Apollo Server
