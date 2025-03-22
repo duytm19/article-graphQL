@@ -55,7 +55,6 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const index_typeDefs_1 = require("./typeDefs/index.typeDefs");
 const index_resolvers_1 = require("./resolvers/index.resolvers");
 const auth_middleware_1 = require("./middlewares/auth.middleware");
-const disabled_1 = require("@apollo/server/plugin/disabled");
 const app = (0, express_1.default)();
 const PORT = 3000;
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -66,7 +65,6 @@ const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
         typeDefs: index_typeDefs_1.typeDefs,
         resolvers: index_resolvers_1.resolvers,
         introspection: true,
-        plugins: [(0, disabled_1.ApolloServerPluginLandingPageDisabled)()],
     });
     yield apolloServer.start();
     app.use("/graphql", (0, cors_1.default)(), body_parser_1.default.json(), (0, express4_1.expressMiddleware)(apolloServer, {

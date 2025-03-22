@@ -27,7 +27,6 @@ const startServer = async () => {
         typeDefs:typeDefs,
         resolvers: resolvers,
         introspection:true,
-        plugins: [ApolloServerPluginLandingPageDisabled()],
     });
 
     // Khởi động Apollo Server
