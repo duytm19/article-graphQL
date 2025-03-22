@@ -9,7 +9,7 @@ import { typeDefs } from "./typeDefs/index.typeDefs";
 import { resolvers } from "./resolvers/index.resolvers";
 
 const app: Express = express();
-const PORT: number = Number(process.env.PORT) || 3000;
+const PORT: Number = 3000;
 
 const startServer = async () => {
     // Load environment variables
