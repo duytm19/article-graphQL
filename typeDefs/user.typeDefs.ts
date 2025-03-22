@@ -15,8 +15,13 @@ export const typeDefsUser = `#graphql
         email:String,
         password: String,
     }
+    input UserLoginInput{
+        email:String,
+        password: String,
+    }
 
     type Mutation{
         registerUser(user: UserRegisterInput):User
+        loginUser(user:UserLoginInput):User
     }
 `

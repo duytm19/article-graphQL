@@ -35,6 +35,35 @@ export const resolversUser={
                     token:data.token,
                 }
             }
+        },
+        loginUser:async(_,args)=>{
+            const {email,password}= args.user
+
+            const infoUser = await User.findOne({
+                email:email,
+                deleted:false
+            })
+
+            if(!infoUser){
+                return {
+                    code:400,
+                    message:"Email is not existence!!"
+                }
+            }
+            if(md5(password)!== infoUser.password){
+                return{
+                    code:400,
+                    message:"Password is not correct!!"
+                }
+            }
+            return{
+                code:200,
+                message:"Successfully!!",
+                id:infoUser.id,
+                fullName: infoUser.fullName,
+                email:infoUser.email,
+                token:infoUser.token
+            }
         }
     }
 }
