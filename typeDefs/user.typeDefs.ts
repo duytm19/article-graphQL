@@ -1,6 +1,7 @@
 
 export const typeDefsUser = `#graphql
     type User{
+        id:ID
         fullName:String,
         email:String,
         password: String,
@@ -8,7 +9,9 @@ export const typeDefsUser = `#graphql
         code: Int,
         message: String
     }
-    
+    type Query{
+        getUser:User
+    }
 
     input UserRegisterInput{
         fullName:String,

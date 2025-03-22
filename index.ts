@@ -7,6 +7,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { typeDefs } from "./typeDefs/index.typeDefs";
 import { resolvers } from "./resolvers/index.resolvers";
+import { requireAuth } from "./middlewares/auth.middleware";
 
 const app: Express = express();
 const PORT: Number = 3000;
@@ -18,20 +19,25 @@ const startServer = async () => {
     // Kết nối database
     await database.connect();
 
+    app.use("/graphql",requireAuth)
     // Khởi tạo Apollo Server
     const apolloServer = new ApolloServer({
         typeDefs:typeDefs,
         resolvers: resolvers,
+        
     });
 
     // Khởi động Apollo Server
     await apolloServer.start();
-
+    
     // Middleware - Ép kiểu qua unknown trước khi sang express.RequestHandler
     app.use(
+        "/graphql",
         cors(),
         bodyParser.json(),
-        expressMiddleware(apolloServer) as unknown as express.RequestHandler
+        expressMiddleware(apolloServer, {
+            context: async ({ req }) => {return { req}},
+        }) as unknown as express.RequestHandler
     );
 
     // Khởi động server

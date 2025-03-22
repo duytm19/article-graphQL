@@ -1,9 +1,39 @@
+import { Query } from "mongoose"
 import { generateRandomString } from "../helpers/generate"
 import User from "../models/user.model"
 import md5 from "md5"
+import { info } from "console"
 
 export const resolversUser={
 
+    Query:{
+        getUser:async (_,args,context)=>{
+      
+        
+           const token =context.req["user"].token
+           //console.log()
+
+            const infoUser = await User.findOne({
+                token:token,
+                deleted:false
+            })
+
+            if(infoUser){
+                return{
+                    code:200,
+                    message:"Get info User successfullly!!",
+                    id:infoUser.id,
+                    fullName:infoUser.fullName,
+                    email:infoUser.email
+                }
+            }else{
+                return{
+                    code:400,
+                    message:"fail to get info user"
+                }
+            }
+        }
+    },
     Mutation:{
         registerUser:async(_,args)=>{
             const {user} = args
